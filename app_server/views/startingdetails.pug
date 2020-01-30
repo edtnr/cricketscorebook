@@ -1,13 +1,12 @@
 extends layout
 
 block content
-    p= battingPlayers
     #form-group
         label Facing batter:
         select.form-control.input( name='startingbatter' type='select')
             each player in battingPlayers
                 option= player.name
-     #form-group
+    #form-group
         label Non facing batter:
         select.form-control.input( name='startingbatter' type='select')
             each player in battingPlayers
