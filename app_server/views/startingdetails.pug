@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    p= battingPlayers
+    #form-group
+        label Facing batter:
+        select.form-control.input( name='startingbatter' type='select')
+            each player in battingPlayers
+                option= player.name
+     #form-group
+        label Non facing batter:
+        select.form-control.input( name='startingbatter' type='select')
+            each player in battingPlayers
+                option= player.name
+    #form-group
+        label Starting bowler:
+        select.form-control.input( name='onlinemanagement' type='select')
+            each player in bowlingPlayers
+                option= player.name
+
+        

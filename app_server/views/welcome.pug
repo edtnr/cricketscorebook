@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    h1= title
+    br
+    form(name='myform', method='POST', action='/players', novalidate)
+        .row
+            .col-lg-12.col-md-6
+                #form-group
+                    h4 Home Team:
+                    input.form-control(name='homeTeam', type='text',  ng-model='hometeam',ng-pattern='/^[a-zA-Z\.ss]*$/', value="#{homeTeam}",id="homeTeam",ng-required='true')
+                    p(ng-show='myform.homeTeam.$error.pattern') must be a valid team name
+                    p(ng-show='myform.homeTeam.$error.required && myform.homeTeam.$touched') Home Team is required
+                    br
+            .col-lg-12.col-md-6
+                #form-group
+                    h4 Away Team:
+                    input.form-control(name='awayTeam', type='text',  ng-model='awayteam',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayTeam",ng-required='true')
+                    p(ng-show='myform.awayTeam.$error.pattern') must be a valid team name
+                    p(ng-show='myform.awayTeam.$error.required && myform.awayTeam.$touched') Away Team is required
+        br
+        .col.text-center
+            input.btn.btn-primary(ng-disabled="myform.$invalid", type='submit', value='Next') 

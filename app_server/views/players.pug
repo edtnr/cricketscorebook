@@ -1,0 +1,37 @@
+extends layout
+
+block content
+    form(name='myform', method='POST', action='/tossdetails', novalidate)
+        .row
+            .col-lg-6
+                h3 #{homeTeam} players:
+                #form-group
+                    input.form-control(name='homePlayer1', type='text',  ng-model='homePlayer1',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer1",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer2', type='text',  ng-model='homePlayer2',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer2",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer3', type='text',  ng-model='homePlayer3',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer3",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer4', type='text',  ng-model='homePlayer4',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer4",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer5', type='text',  ng-model='homePlayer5',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer5",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer6', type='text',  ng-model='homePlayer6',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer6",ng-required='true')
+            .col-lg-6
+                h3 #{awayTeam} players:
+                #form-group
+                    input.form-control(name='awayPlayer1', type='text',  ng-model='awayPlayer1',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer1",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer2', type='text',  ng-model='awayPlayer2',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer2",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer3', type='text',  ng-model='awayPlayer3',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer3",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer4', type='text',  ng-model='awayPlayer4',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer4",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer5', type='text',  ng-model='awayPlayer5',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer5",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer6', type='text',  ng-model='awayPlayer6',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer6",ng-required='true')
+        br
+        .col.text-center
+            input.btn.btn-primary( type='submit', value='Next') 
+

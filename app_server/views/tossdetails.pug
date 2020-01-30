@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    p #{homePlayers}
+    form(name='myform', method='POST', action='/startingdetails', novalidate)
+        #form-group
+            label Winner of toss?:
+            select.form-control.input(name='tossWin' type='select')
+                option= homeTeam
+                option= awayTeam
+        #form-group
+            label Elected to?: 
+            select.form-control.input(name='electedTo', type='select')
+                option Bat
+                option Bowl
+        br
+        .col.text-center
+            input.btn.btn-primary( type='submit', value='Next') 
+        
+            
+            
