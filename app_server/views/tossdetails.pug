@@ -2,19 +2,30 @@ extends layout
 
 block content
     form(name='myform', method='POST', action='/startingdetails', novalidate)
+        h1= title
         #form-group
-            label Winner of toss?:
+            h3 Winner of toss?:
             select.form-control.input(name='tossWin' type='select')
                 option= homeTeam
                 option= awayTeam
         #form-group
-            label Elected to?: 
+            h3 Elected to?: 
             select.form-control.input(name='electedTo', type='select')
                 option Bat
                 option Bowl
         br
         .col.text-center
             input.btn.btn-primary( type='submit', value='Next') 
-        
+        br
+        nav(aria-label='breadcrumb')
+            ol.breadcrumb
+                li.breadcrumb-item
+                    a(href='/') Teams Setup
+                li.breadcrumb-item
+                    a(href='/players') Players Setup
+                li.breadcrumb-item.active(aria-current='page') Toss Details
+                li.breadcrumb-item Starting Details
+                li.breadcrumb-item Scoring
+                    
             
             

@@ -8,16 +8,31 @@ block content
             .col-lg-12.col-md-6
                 #form-group
                     h4 Home Team:
-                    input.form-control(name='homeTeam', type='text',  ng-model='hometeam',ng-pattern='/^[a-zA-Z\.ss]*$/', value="#{homeTeam}",id="homeTeam",ng-required='true')
+                    input.form-control(name='homeTeam', type='text',  ng-model='hometeam', ng-value='homeTeam', ng-pattern='/^[a-zA-Z0-9\_\- ]*$/',id="homeTeam",ng-required='true')
                     p(ng-show='myform.homeTeam.$error.pattern') must be a valid team name
                     p(ng-show='myform.homeTeam.$error.required && myform.homeTeam.$touched') Home Team is required
                     br
             .col-lg-12.col-md-6
                 #form-group
                     h4 Away Team:
-                    input.form-control(name='awayTeam', type='text',  ng-model='awayteam',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayTeam",ng-required='true')
+                    input.form-control(name='awayTeam', type='text',  ng-model='awayteam',  ng-value='awayTeam', ng-pattern='/^[a-zA-Z0-9\_\- ]*$/', id="awayTeam",ng-required='true')
                     p(ng-show='myform.awayTeam.$error.pattern') must be a valid team name
                     p(ng-show='myform.awayTeam.$error.required && myform.awayTeam.$touched') Away Team is required
         br
         .col.text-center
             input.btn.btn-primary(ng-disabled="myform.$invalid", type='submit', value='Next') 
+        br
+        nav(aria-label='breadcrumb')
+            ol.breadcrumb
+                li.breadcrumb-item.active(aria-current='page') Teams Setup
+                    a(href='/')
+                li.breadcrumb-item Players Setup
+                li.breadcrumb-item Toss Details
+                li.breadcrumb-item Starting Details
+                li.breadcrumb-item Scoring
+    script.
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.homeTeam = "#{homeTeam}";
+            $scope.awayTeam = "#{awayTeam}";
+        });

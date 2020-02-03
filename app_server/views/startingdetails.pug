@@ -1,20 +1,36 @@
 extends layout
 
 block content
+    h1= title
+    br
     #form-group
-        label Facing batter:
+        h3 Facing batter:
         select.form-control.input( name='startingbatter' type='select')
             each player in battingPlayers
                 option= player.name
+    br
     #form-group
-        label Non facing batter:
+        h3 Non facing batter:
         select.form-control.input( name='startingbatter' type='select')
             each player in battingPlayers
                 option= player.name
+    br
     #form-group
-        label Starting bowler:
-        select.form-control.input( name='onlinemanagement' type='select')
+        h3 Starting bowler:
+        select.form-control.input( name='startingbowler' type='select')
             each player in bowlingPlayers
                 option= player.name
-
-        
+    .col.text-center
+        input.btn.btn-primary( type='submit', value='Start Scoring') 
+    br
+    nav(aria-label='breadcrumb')
+        ol.breadcrumb
+            li.breadcrumb-item
+                a(href='/') Teams Setup
+            li.breadcrumb-item
+                a(href='/players') Players Setup
+            li.breadcrumb-item 
+                a(href='/tossdetails') Toss Details
+            li.breadcrumb-item.active(aria-current='page')  Starting Details
+            li.breadcrumb-item Scoring
+    

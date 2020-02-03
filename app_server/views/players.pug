@@ -6,7 +6,7 @@ block content
             .col-lg-6
                 h3 #{homeTeam} players:
                 #form-group
-                    input.form-control(name='homePlayer1', type='text',  ng-model='homePlayer1',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer1",ng-required='true')
+                    input.form-control(name='homePlayer1', type='text', ng-model='homePlayer1',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer1",ng-required='true')
                 #form-group
                     input.form-control(name='homePlayer2', type='text',  ng-model='homePlayer2',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer2",ng-required='true')
                 #form-group
@@ -17,6 +17,16 @@ block content
                     input.form-control(name='homePlayer5', type='text',  ng-model='homePlayer5',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer5",ng-required='true')
                 #form-group
                     input.form-control(name='homePlayer6', type='text',  ng-model='homePlayer6',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer6",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer7', type='text',  ng-model='homePlayer7',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer7",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer8', type='text',  ng-model='homePlayer8',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer8",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer9', type='text',  ng-model='homePlayer9',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer9",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer10', type='text',  ng-model='homePlayer10',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer10",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer11', type='text',  ng-model='homePlayer11',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer11",ng-required='true')
             .col-lg-6
                 h3 #{awayTeam} players:
                 #form-group
@@ -31,7 +41,57 @@ block content
                     input.form-control(name='awayPlayer5', type='text',  ng-model='awayPlayer5',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer5",ng-required='true')
                 #form-group
                     input.form-control(name='awayPlayer6', type='text',  ng-model='awayPlayer6',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer6",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer7', type='text',  ng-model='awayPlayer7',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer7",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer8', type='text',  ng-model='awayPlayer8',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer8",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer9', type='text',  ng-model='awayPlayer9',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer9",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer10', type='text',  ng-model='awayPlayer10',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer10",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer11', type='text',  ng-model='awayPlayer11',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer11",ng-required='true')
         br
         .col.text-center
             input.btn.btn-primary( type='submit', value='Next') 
+        br
+        nav(aria-label='breadcrumb')
+            ol.breadcrumb
+                li.breadcrumb-item
+                    a(href='/') Team Setup
+                li.breadcrumb-item.active(aria-current='page') Players Setup
+                li.breadcrumb-item Toss Details
+                li.breadcrumb-item Starting Details
+                li.breadcrumb-item Scoring
+        
+    script.
+        var app = angular.module('myApp', []);
+            app.controller('myCtrl', function($scope) {
+                $scope.homePlayer1 = "#{homePlayers[0].name}";
+                $scope.homePlayer2 = "#{homePlayers[1].name}";
+                $scope.homePlayer3 = "#{homePlayers[2].name}";
+                $scope.homePlayer4 = "#{homePlayers[3].name}";
+                $scope.homePlayer5 = "#{homePlayers[4].name}";
+                $scope.homePlayer6 = "#{homePlayers[5].name}";
+                $scope.homePlayer7 = "#{homePlayers[6].name}";
+                $scope.homePlayer8 = "#{homePlayers[7].name}";
+                $scope.homePlayer9 = "#{homePlayers[8].name}";
+                $scope.homePlayer10 = "#{homePlayers[9].name}";
+                $scope.homePlayer11 = "#{homePlayers[10].name}";
+
+                $scope.awayPlayer1 = "#{awayPlayers[0].name}";
+                $scope.awayPlayer2 = "#{awayPlayers[1].name}";
+                $scope.awayPlayer3 = "#{awayPlayers[2].name}";
+                $scope.awayPlayer4 = "#{awayPlayers[3].name}";
+                $scope.awayPlayer5 = "#{awayPlayers[4].name}";
+                $scope.awayPlayer6 = "#{awayPlayers[5].name}";
+                $scope.awayPlayer7 = "#{awayPlayers[6].name}";
+                $scope.awayPlayer8 = "#{awayPlayers[7].name}";
+                $scope.awayPlayer9 = "#{awayPlayers[8].name}";
+                $scope.awayPlayer10 = "#{awayPlayers[9].name}";
+                $scope.awayPlayer11 = "#{awayPlayers[10].name}";
+                $scope.awayTeam = "#{awayTeam}";
+            });
+        
+        
 
