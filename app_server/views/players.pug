@@ -1,6 +1,9 @@
 extends layout
 
 block content
+    .col.text-center
+        h1= title
+    br
     form(name='myform', method='POST', action='/tossdetails', novalidate)
         .row
             .col-lg-6
@@ -58,7 +61,7 @@ block content
         nav(aria-label='breadcrumb')
             ol.breadcrumb
                 li.breadcrumb-item
-                    a(href='/') Team Setup
+                    a(href='/teams') Team Setup
                 li.breadcrumb-item.active(aria-current='page') Players Setup
                 li.breadcrumb-item Toss Details
                 li.breadcrumb-item Starting Details

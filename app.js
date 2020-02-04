@@ -28,79 +28,84 @@ app.use(express.static(path.join(__dirname, "public")));
 var homeTeam = "";
 var awayTeam = "";
 
-var homePlayers = [ {
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-}];
+var homePlayers = [
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  }
+];
 
-var awayPlayers = [ {
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-},
-{
-  name: ""
-}];
+var awayPlayers = [
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  },
+  {
+    name: ""
+  }
+];
 
 app.post("/players", function(req, res) {
   homeTeam = req.body.homeTeam;
   awayTeam = req.body.awayTeam;
   console.log(req.body.homeTeam);
   res.render("players", {
+    title: "Player setup",
     homeTeam: homeTeam,
     awayTeam: awayTeam,
     homePlayers: homePlayers,
@@ -108,10 +113,17 @@ app.post("/players", function(req, res) {
   });
 });
 
-//route to home
+//
 app.get("/", function(req, res) {
   res.render("welcome", {
-    title: "Welcome to Cricket Score book",
+    title: "Welcome to Cricket Score Book"
+  })
+});
+
+//route to first setup page
+app.get("/teams", function(req, res) {
+  res.render("teams", {
+    title: "Team Setup",
     homeTeam: homeTeam,
     awayTeam: awayTeam
   });
@@ -201,11 +213,12 @@ app.post("/tossdetails", function(req, res) {
 
 app.get("/players", function(req, res) {
   res.render("players", {
+    title: "Player setup",
     homeTeam: homeTeam,
     awayTeam: awayTeam,
     homePlayers: homePlayers,
     awayPlayers: awayPlayers
-  })
+  });
 });
 
 app.get("/tossdetails", function(req, res) {
@@ -215,7 +228,7 @@ app.get("/tossdetails", function(req, res) {
     awayPlayers: awayPlayers,
     homeTeam: homeTeam,
     awayTeam: awayTeam
-  })  
+  });
 });
 
 var battingPlayers = [];
@@ -267,13 +280,13 @@ app.post("/startingdetails", function(req, res) {
 });
 
 app.get("/startingdetails", function(req, res) {
-  console.log(battingPlayers)
+  console.log(battingPlayers);
   res.render("startingdetails", {
     title: "Details of starting players",
     battingPlayers: battingPlayers,
     bowlingPlayers: bowlingPlayers
   });
-})
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

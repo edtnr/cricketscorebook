@@ -1,8 +1,10 @@
 extends layout
 
 block content
-    form(name='myform', method='POST', action='/startingdetails', novalidate)
+    .col.text-center
         h1= title
+    form(name='myform', method='POST', action='/startingdetails', novalidate)
+        
         #form-group
             h3 Winner of toss?:
             select.form-control.input(name='tossWin' type='select')
@@ -20,7 +22,7 @@ block content
         nav(aria-label='breadcrumb')
             ol.breadcrumb
                 li.breadcrumb-item
-                    a(href='/') Teams Setup
+                    a(href='/teams') Teams Setup
                 li.breadcrumb-item
                     a(href='/players') Players Setup
                 li.breadcrumb-item.active(aria-current='page') Toss Details

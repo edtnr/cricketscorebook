@@ -1,7 +1,8 @@
 extends layout
 
 block content
-    h1= title
+    .col.text-center
+        h1= title
     br
     #form-group
         h3 Facing batter:
@@ -26,7 +27,7 @@ block content
     nav(aria-label='breadcrumb')
         ol.breadcrumb
             li.breadcrumb-item
-                a(href='/') Teams Setup
+                a(href='/teams') Teams Setup
             li.breadcrumb-item
                 a(href='/players') Players Setup
             li.breadcrumb-item 
