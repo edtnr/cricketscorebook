@@ -4,26 +4,27 @@ block content
     .col.text-center
         h1= title
     br
-    #form-group
-        h3 Facing batter:
-        select.form-control.input( name='startingbatter' type='select')
-            each player in battingPlayers
-                option= player.name
-    br
-    #form-group
-        h3 Non facing batter:
-        select.form-control.input( name='startingbatter' type='select')
-            each player in battingPlayers
-                option= player.name
-    br
-    #form-group
-        h3 Starting bowler:
-        select.form-control.input( name='startingbowler' type='select')
-            each player in bowlingPlayers
-                option= player.name
-    .col.text-center
-        input.btn.btn-primary( type='submit', value='Start Scoring') 
-    br
+    form(name='myform', method='POST', action='/scoring', novalidate)
+        #form-group
+            h3 Facing batter:
+            select.form-control.input( name='startingbatter1' type='select')
+                each player in battingPlayers
+                    option= player.name
+        br
+        #form-group
+            h3 Non facing batter:
+            select.form-control.input( name='startingbatter2' type='select')
+                each player in battingPlayers
+                    option= player.name
+        br
+        #form-group
+            h3 Starting bowler:
+            select.form-control.input( name='startingbowler' type='select')
+                each player in bowlingPlayers
+                    option= player.name
+        .col.text-center
+            input.btn.btn-primary( type='submit', value='Start Scoring') 
+        br
     nav(aria-label='breadcrumb')
         ol.breadcrumb
             li.breadcrumb-item

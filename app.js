@@ -6,9 +6,9 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const indexRouter = require("./app_server/routes/index");
 const usersRouter = require("./app_server/routes/users");
-
 const app = express();
 
+require("./app_server/models/db");
 // view engine setup
 app.set("views", path.join(__dirname, "app_server", "views"));
 app.set("view engine", "pug");
@@ -22,9 +22,39 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 
+const routesAPI = require("./app_api/routes/matches");
+app.use("/api", routesAPI);
+
+var routes = require('./app_server/routes/index');
+app.use('/', routes);
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+require("./app_server/features/teams/TeamService");
+require("./app_server/features/teams/TeamModel");
+require("./app_server/models/PlayerModel");
+require("./app_server/models/MatchModel");
+
+const mongoose = require("mongoose");
+//connect to database
+const dbURI = "mongodb://localhost:27017/cricketscorebook";
+mongoose.connect(dbURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+/** 
+const test = () => {
+    const team = createTeam({
+        teamname: "England",
+        players: "Steve",
+        homeoraway: "home",
+        battingorbowling: "batting"
+    })
+    console.log(team);
+}
+test();
+*/
 var homeTeam = "";
 var awayTeam = "";
 
@@ -111,13 +141,6 @@ app.post("/players", function(req, res) {
     homePlayers: homePlayers,
     awayPlayers: awayPlayers
   });
-});
-
-//
-app.get("/", function(req, res) {
-  res.render("welcome", {
-    title: "Welcome to Cricket Score Book"
-  })
 });
 
 //route to first setup page
@@ -287,6 +310,112 @@ app.get("/startingdetails", function(req, res) {
     bowlingPlayers: bowlingPlayers
   });
 });
+
+const TeamModel = mongoose.model("Team");
+const PlayerModel = mongoose.model("Player");
+const MatchModel = mongoose.model("Match");
+
+var battingTeam = "";
+var Players = [];
+var bowlingPlayers = [];
+app.get("/scoring", function(req, res) {
+  TeamModel.findOne({ home: "true" })
+    .lean()
+    .exec(function(err, team) {
+      battingTeam = team.teamName;
+    });
+  PlayerModel.find({ home: "true", batting: "true", playing: "true" })
+    .lean()
+    .exec(function(err, docs) {
+      for (i = 0; i < docs.length; i++) {
+        Players.push(docs[i].name);
+      }
+    });
+  PlayerModel.find({ home: "false", batting: "false", playing: "true" })
+    .lean()
+    .exec(function(err, docs) {
+      for (i = 0; i < docs.length; i++) {
+        bowlingPlayers.push(docs[i].name);
+      }
+    });
+
+  res.render("scoring", {
+    title: "Begin scoring",
+    homeTeam: battingTeam,
+    awayTeam: awayTeam,
+    players: Players,
+    bowlingPlayers: bowlingPlayers
+  });
+  Players = [];
+  bowlingPlayers = [];
+});
+
+app.post("/scoring", function(req, res) {
+  PlayerModel.find({ home: "true", batting: "true", playing: "true" })
+    .lean()
+    .exec(function(err, docs) {
+      for (i = 0; i < docs.length; i++) {
+        Players.push(docs[i].name);
+      }
+    });
+  PlayerModel.find({ home: "false", batting: "false", playing: "true" })
+    .lean()
+    .exec(function(err, docs) {
+      for (i = 0; i < docs.length; i++) {
+        bowlingPlayers.push(docs[i].name);
+      }
+    });
+
+  for (i = 0; i < homePlayers.length; i++) {
+    if (
+      homePlayers[i].name == req.body.startingbatter1 ||
+      homePlayers[i].name == req.body.startingbatter2
+    ) {
+      new PlayerModel({
+        name: homePlayers[i].name,
+        home: true,
+        playing: true,
+        batting: true
+      })
+        .save()
+        .catch(e => console.log(e));
+    } else {
+      new PlayerModel({
+        name: homePlayers[i].name,
+        home: true,
+        playing: false,
+        batting: true
+      })
+        .save()
+        .catch(e => console.log(e));
+    }
+  }
+
+  if (JSON.stringify(homePlayers) === JSON.stringify(battingPlayers)) {
+    new TeamModel({
+      teamName: homeTeam,
+      home: true,
+      batting: true
+    }).save();
+    new TeamModel({
+      teamName: awayTeam,
+      home: false,
+      batting: false
+    }).save();
+  } else if (JSON.stringify(homePlayers) == JSON.stringify(bowlingPlayers)) {
+  }
+
+  res.render("scoring", {
+    homeTeam: homeTeam,
+    title: "Begin Scoring",
+    homeTeam: battingTeam,
+    awayTeam: awayTeam,
+    players: Players,
+    bowlingPlayers: bowlingPlayers
+  });
+});
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

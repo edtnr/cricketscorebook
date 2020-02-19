@@ -4,25 +4,74 @@ block content
     .col.text-center
         h1= title
     br
-    form(name='myform', method='POST', action='/players', novalidate)
+    form(name='myform', method='POST', action='/Matches', novalidate)
         .row
-            .col-lg-12.col-md-6
+            .col-lg-6.col-md-6
                 #form-group
                     h4 Home Team:
                     input.form-control(name='homeTeam', type='text',  ng-model='hometeam', ng-value='homeTeam', ng-pattern='/^[a-zA-Z0-9\_\- ]*$/',id="homeTeam",ng-required='true')
                     p(ng-show='myform.homeTeam.$error.pattern') must be a valid team name
                     p(ng-show='myform.homeTeam.$error.required') Home Team is required
                 br
-            .col-lg-12.col-md-6
+                #form-group
+                    h4 Home Players:
+                    input.form-control(name='homePlayer1', type='text', ng-model='homePlayer1',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer1",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer2', type='text',  ng-model='homePlayer2',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer2",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer3', type='text',  ng-model='homePlayer3',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer3",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer4', type='text',  ng-model='homePlayer4',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer4",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer5', type='text',  ng-model='homePlayer5',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer5",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer6', type='text',  ng-model='homePlayer6',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer6",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer7', type='text',  ng-model='homePlayer7',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer7",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer8', type='text',  ng-model='homePlayer8',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer8",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer9', type='text',  ng-model='homePlayer9',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer9",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer10', type='text',  ng-model='homePlayer10',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer10",ng-required='true')
+                #form-group
+                    input.form-control(name='homePlayer11', type='text',  ng-model='homePlayer11',ng-pattern='/^[a-zA-Z\.ss]*$/', id="homePlayer11",ng-required='true')
+                br
+            .col-lg-6.col-md-6
                 #form-group
                     h4 Away Team:
                     input.form-control(name='awayTeam', type='text',  ng-model='awayteam',  ng-value='awayTeam', ng-pattern='/^[a-zA-Z0-9\_\- ]*$/', id="awayTeam",ng-required='true')
                     p(ng-show='myform.awayTeam.$error.pattern') must be a valid team name
                     p(ng-show='myform.awayTeam.$error.required') Away Team is required
+                br
+                #form-group
+                    h4 Away Players:
+                    input.form-control(name='awayPlayer1', type='text',  ng-model='awayPlayer1',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer1",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer2', type='text',  ng-model='awayPlayer2',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer2",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer3', type='text',  ng-model='awayPlayer3',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer3",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer4', type='text',  ng-model='awayPlayer4',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer4",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer5', type='text',  ng-model='awayPlayer5',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer5",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer6', type='text',  ng-model='awayPlayer6',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer6",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer7', type='text',  ng-model='awayPlayer7',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer7",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer8', type='text',  ng-model='awayPlayer8',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer8",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer9', type='text',  ng-model='awayPlayer9',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer9",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer10', type='text',  ng-model='awayPlayer10',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer10",ng-required='true')
+                #form-group
+                    input.form-control(name='awayPlayer11', type='text',  ng-model='awayPlayer11',ng-pattern='/^[a-zA-Z\.ss]*$/', id="awayPlayer11",ng-required='true')
         br
         .col.text-center
-            input.btn.btn-primary(ng-disabled="myform.$invalid", type='submit', value='Next') 
+            input.btn.btn-primary( type='submit', value='Submit') 
         br
+        
         nav(aria-label='breadcrumb')
             ol.breadcrumb
                 li.breadcrumb-item.active(aria-current='page') Teams Setup
@@ -31,9 +80,12 @@ block content
                 li.breadcrumb-item Toss Details
                 li.breadcrumb-item Starting Details
                 li.breadcrumb-item Scoring
+        
     script.
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function($scope) {
             $scope.homeTeam = "#{homeTeam}";
             $scope.awayTeam = "#{awayTeam}";
+         
+       
         });

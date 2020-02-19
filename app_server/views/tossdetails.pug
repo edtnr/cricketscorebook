@@ -3,7 +3,7 @@ extends layout
 block content
     .col.text-center
         h1= title
-    form(name='myform', method='POST', action='/startingdetails', novalidate)
+    form(name='myform', method='POST', action="/startingdetails/"+ matchid+ "/" + homeTeam + "/" + awayTeam, novalidate)
         
         #form-group
             h3 Winner of toss?:

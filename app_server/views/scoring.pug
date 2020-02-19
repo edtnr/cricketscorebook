@@ -1,0 +1,63 @@
+extends layout
+
+block content
+    .col.text-center
+        h1= title
+    .row
+        .col-lg-7.col-md-7
+            h4 Batting Statistics
+            table.table
+                tr
+                    th Player name
+                    th Runs scored
+                    th Balls faced
+                    th Fours
+                    th Sixes
+                    th Economy Rate
+                each player in players
+                    tr 
+                        td #{player.name}
+                        td #{player.runsscored}
+                        td 0
+                        td 0
+                        td 0 
+                        td 0
+                
+            br
+            h4 Bowling Statistics
+            table.table
+                tr
+                    th Player name
+                    th balls bowled
+                    th Runs against
+                    th Wickets gained                   
+                each player in bowlingPlayers
+                    tr 
+                        td #{player.name}
+                        td #{player.ballsbowled}
+                        td 0
+                        td 0  
+        .col-lg-5.col-md-5
+            .col.text-center
+                h1 #{homeTeam} 0
+            br
+            .col.text-center
+                h1 Overs played: 0.1
+
+    br
+    .card
+        .row
+            form(name='myform', method='POST', action='/gametime', novalidate)
+                .col-lg-12.btn-group
+                    button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='.') .
+                    button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='1') 1
+                    button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='2') 2
+                    button.btn.btn-outline-dark.btn-lg(type='button', name='scoring', value='3') 3
+                    button.btn.btn-outline-dark.btn-lg(type='button', name='scoring', value='4') 4
+                    button.btn.btn-outline-dark.btn-lg(type='button', name='scoring', value='6') 6
+                    button.btn.btn-outline-dark.btn-lg(type='button', name='scoring', value='5+') 5+
+                    button.btn.btn-outline-warning.btn-lg(type='button', name='scoring', value='wide') Wide
+                    button.btn.btn-outline-warning.btn-lg(type='button', name='scoring', value='no ball') No Ball
+                    button.btn.btn-outline-warning.btn-lg(type='button', name='scoring', value='bye') Bye
+                    button.btn.btn-outline-warning.btn-lg(type='button', name='scoring',value='leg bye') Leg Bye
+                    button.btn.btn-outline-danger.btn-lg(type='button', name='scoring', value='out') Out
