@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 require("../models/MatchModel");
 var match = mongoose.model("match");
-var app = require("../../app");
-console.log(app.homeTeam);
+
 
 const sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -10,7 +9,6 @@ const sendJsonResponse = function(res, status, content) {
 };
 
 module.exports.createMatch = function(req, res) {
-  console.log(req.body);
   match
     .create({
       homeTeam: req.body.homeTeam,
@@ -200,7 +198,6 @@ module.exports.playersUpdateBatting = function(req, res) {
     return;
   }
   var team = req.params.teamname;
-  console.log(team);
   match.findById(req.params.matchid)
   .select("players")
   .exec(function(err, Match) {
@@ -214,13 +211,13 @@ module.exports.playersUpdateBatting = function(req, res) {
       sendJsonResponse(res, 400, err);
       return;
     }
-
     if (Match.players && Match.players.length > 0) {
       for(i = 0; i< Match.players.length; i++) {
         battingPlayers[i] = Match.players[i];
         if(Match.players[i].team == team) {
           battingPlayers[i].batting = true;
-          
+        } else {
+          battingPlayers[i].batting = false;
         }
       }
       Match.save(function(err, Match) {
@@ -236,7 +233,7 @@ module.exports.playersUpdateBatting = function(req, res) {
 
 
 module.exports.playersUpdatePlaying = function(req, res) {
-  if (!req.params.matchid || !req.params.playerid) {
+  if (!req.params.matchid || !req.params.facingbatterid || !req.params.batterid || !req.params.bowlerid) {
     sendJsonResponse(res, 404, {
       message: "Match ID and player ID required"
     });
@@ -246,7 +243,7 @@ module.exports.playersUpdatePlaying = function(req, res) {
     .findById(req.params.matchid)
     .select("players")
     .exec(function(err, Match) {
-      var thisPlayer;
+      var thisFacingBatter, thisBatter, thisBowler;
       if (!Match) {
         sendJsonResponse(res, 404, {
           message: "matchid not found"
@@ -257,21 +254,255 @@ module.exports.playersUpdatePlaying = function(req, res) {
         return;
       }
       if (Match.players && Match.players.length > 0) {
-        thisPlayer = Match.players.id(req.params.playerid);
-        if (!thisPlayer) {
+        thisFacingBatter = Match.players.id(req.params.facingbatterid);
+        thisBatter = Match.players.id(req.params.batterid);
+        thisBowler = Match.players.id(req.params.bowlerid);
+        if (!thisFacingBatter || !thisBatter || !thisBowler) {
           sendJsonResponse(res, 404, {
-            message: "playerid not found"
+            message: "PLayer IDs not found"
           });
         } else {
-          thisPlayer.playing = true;
+          for(i=0; i < Match.players.length; i++) {
+            Match.players[i].playing = false
+            Match.players[i].facing = false;
+          }
+
+          thisFacingBatter.playing = true;
+          thisFacingBatter.facing = true;
+          thisBatter.facing = false;
+          thisBatter.playing = true;
+          thisBowler.playing = true;
           Match.save(function(err, Match) {
             if (err) {
               sendJsonResponse(res, 404, err);
             } else {
-              sendJsonResponse(res, 200, thisPlayer);
+              sendJsonResponse(res, 200, Match);
             }
           });
         }
       }
     });
 };
+
+module.exports.updateScore = function(req, res) {
+  if (!req.params.matchid || !req.params.batterid || !req.params.bowlerid) {
+    sendJsonResponse(res, 404, {
+      message: "Match ID and player ID required"
+    });
+    return;
+  }
+  match
+    .findById(req.params.matchid)
+    .select("players")
+    .exec(function(err, Match) {
+      var thisBatter, thisBowler,thisFacingBatter;
+      if (!Match) {
+        sendJsonResponse(res, 404, {
+          message: "matchid not found"
+        });
+        return;
+      } else if (err) {
+        sendJsonResponse(res, 400, err);
+        return;
+      }
+      if (Match.players && Match.players.length > 0) {
+        thisFacingBatter = Match.players.id(req.params.facingbatterid)
+        thisBatter = Match.players.id(req.params.batterid);
+        thisBowler = Match.players.id(req.params.bowlerid);
+        if (!thisBatter || !thisBowler ) {
+          sendJsonResponse(res, 404, {
+            message: "PLayer IDs not found"
+          });
+        } else {
+
+          thisFacingBatter.runsscored = thisFacingBatter.runsscored + parseInt(req.params.score);
+          thisBowler.ballsbowled += 1;
+          thisFacingBatter.ballsfaced += 1;
+          thisBowler.runsagainst += parseInt(req.params.score);
+          if (parseInt(req.params.score)!=0 && parseInt(req.params.score) % 2 != 0) {
+            thisFacingBatter.facing = false;
+            thisBatter.facing = true;
+          }
+          Match.save(function(err, Match) {
+            if (err) {
+              console.log(err);
+              sendJsonResponse(res, 404, err);
+            } else {
+              updateOvers(Match._id);
+              updateScore(Match._id, parseInt(req.params.score))
+              sendJsonResponse(res, 200, Match);
+            }
+          });
+        }
+      }
+    });
+};
+
+var updateOvers = function(matchid) {
+  match
+    .findById(matchid)
+    .select("oversPlayed") 
+    .exec(
+      function(err, match) {
+        if(!err) {
+          doSetOvers(match);
+          
+        }
+      }
+    )
+    
+}
+
+var doSetOvers = function(match) {
+  var overs;
+  if (match.oversPlayed % 5 == 0 && match.oversPlayed % 10 != 0) {
+    match.oversPlayed += 5;
+  } else {
+    match.oversPlayed += 1;
+  }
+  match.save(function(err) {
+    if(err) {
+      console.log(err)
+    } else {
+      console.log("overs updated to " + match.oversPlayed/10)
+    }
+  })
+}
+
+
+var updateScore = function(matchid,runsScored) {
+  console.log("Update score for: " + matchid +" By " + runsScored)
+  match
+    .findById(matchid)
+    .select("score") 
+    .exec(
+      function(err, match) {
+        if(!err) {
+          doSetScore(match, runsScored);   
+        }
+      }
+    )
+    
+}
+
+var doSetScore = function(match, runsScored) {
+  var overs;
+  match.score += runsScored;
+  match.save(function(err) {
+    if(err) {
+      console.log(err)
+    } else {
+      console.log("overs updated to " + match.score)
+    }
+  })
+}
+
+module.exports.playerUpdateOut = function(req, res) {
+  if (!req.params.matchid || !req.params.outbatterid || !req.params.newbatterid ) {
+    sendJsonResponse(res, 404, {
+      message: "Match ID and player ID required"
+    });
+    return;
+  }
+  match
+    .findById(req.params.matchid)
+    .select("players")
+    .exec(function(err, Match) {
+      var thisOutBatter, thisNewBatter;
+      if (!Match) {
+        sendJsonResponse(res, 404, {
+          message: "matchid not found"
+        });
+        return;
+      } else if (err) {
+        sendJsonResponse(res, 400, err);
+        return;
+      }
+      if (Match.players && Match.players.length > 0) {
+        thisOutBatter = Match.players.id(req.params.outbatterid);
+        thisNewBatter = Match.players.id(req.params.newbatterid);
+        if (!thisOutBatter || !thisNewBatter) {
+          sendJsonResponse(res, 404, {
+            message: "PLayer IDs not found"
+          });
+        } else {
+          thisOutBatter.playing = false;
+          thisOutBatter.out = true;
+          if(thisOutBatter.facing == true) {
+            thisNewBatter.facing = true;
+          }
+          thisOutBatter.facing = false;
+          
+          thisNewBatter.playing = true;
+          
+          Match.save(function(err, Match) {
+            if (err) {
+              
+              sendJsonResponse(res, 404, err);
+            } else {
+              updateWicketsMatch(Match._id);
+              updatesWicketsPlayer(Match._id);
+              updateOvers(Match._id);
+              sendJsonResponse(res, 200, Match);
+            }
+          });
+        }
+      }
+    });
+};
+var updateWicketsMatch = function(matchid) {
+  console.log("Update wickets for: " + matchid)
+  match
+    .findById(matchid)
+    .select("wickets") 
+    .exec(
+      function(err, match) {
+        if(!err) {
+          doSetWickets(match);
+        }
+      }
+    )
+    
+}
+
+var doSetWickets = function(match) {
+  match.wickets +=1;
+  match.save(function(err) {
+    if(err) {
+      console.log(err)
+    } else {
+      console.log("wickets updated to " + match.wickets)
+    }
+  })
+}
+
+var updatesWicketsPlayer = function(matchid) {
+  console.log("Update wickets for: " + matchid)
+  match
+    .findById(matchid)
+    .select("players") 
+    .exec(
+      function(err, match) {
+        if(!err) {
+          doSetPlayerWickets(match);
+        }
+      }
+    )
+    
+}
+
+var doSetPlayerWickets = function(match) {
+  for (i=0; i< match.players.length; i++) {
+    if(match.players[i].batting == false && match.players[i].playing == true) {
+      match.players[i].wicketsgained +=1;
+    }
+  }
+  match.save(function(err) {
+    if(err) {
+
+      console.log(err)
+    } else {
+      console.log("wickets updated to " + match.wicketsgained)
+    }
+  })
+}

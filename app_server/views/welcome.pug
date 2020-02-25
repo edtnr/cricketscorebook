@@ -8,16 +8,23 @@ block content
         .row
             .col.text-center
                 #form-group
-                    input.btn.btn-primary(type='submit', value='Start New Game') 
+                    input.btn.btn-primary.btn-lg(type='submit', value='Start New Game') 
     br
     form(name='myform', method='GET', action='/load', novalidate)
         .row
             .col.text-center
                 #form-group
-                    input.btn.btn-primary(type='submit', value='Load Previous Game') 
+                    input.btn.btn-primary.btn-lg(type='submit', value='Load Previous Game') 
     br
-    form(name='myform', method='GET', action='/options', novalidate)
+    form(name='myform', method='GET', action='/statistics', novalidate)
         .row
             .col.text-center
                 #form-group
-                    input.btn.btn-primary(type='submit', value='Options') 
+                    input.btn.btn-primary.btn-lg(type='submit', value='View statistics') 
+    br
+    form(name='myform', method='GET', action='/', novalidate)
+        .row
+            .col.text-center
+                #form-group
+                    input.btn.btn-primary.btn-lg(type='submit', value='Options') 
+    br

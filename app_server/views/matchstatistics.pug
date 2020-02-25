@@ -1,0 +1,41 @@
+extends layout
+
+block content
+    .col.text-center
+        h1= title
+    .row
+        .col-lg-12.col-md-12 
+            h2.col.text-center #{homeTeam} vs #{awayTeam}
+            h3.col.text-center  Score: #{matchScore} - #{matchWickets}
+        br
+        .col-lg-6.col-md-6
+            h4 Batting Statistics
+            
+            table.table
+                tr
+                    th Player name
+                    th Runs scored
+                    th Balls faced
+                    th Economy Rate
+                    th out?
+                each player in battingPlayers
+                    tr 
+                        td #{player.name}
+                        td #{player.runsscored}
+                        td #{player.ballsfaced}
+                        td #{player.runsscored/(overs/10)}
+                        td #{player.out}
+        .col-lg-6.col-md-6
+            h4 Bowling Statistics
+            table.table
+                tr
+                    th Player name
+                    th balls bowled
+                    th Runs against
+                    th Wickets gained                   
+                each player in bowlingPlayers
+                    tr 
+                        td #{player.name}
+                        td #{player.ballsbowled}
+                        td #{player.runsagainst}
+                        td #{player.wicketsgained}

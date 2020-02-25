@@ -1,0 +1,9 @@
+extends layout
+
+block content
+        h1= title
+        .row.list-group
+        each match in matches
+          .col-xs-12.list-group-item
+            h4 
+              a(href="/match/stats/"+ match._id) #{match.homeTeam} vs #{match.awayTeam}

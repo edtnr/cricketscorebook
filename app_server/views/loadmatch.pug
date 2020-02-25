@@ -1,12 +1,13 @@
 extends layout
 
 block content 
+    h1.col-text-center Load a match
     .row
     .col-xs-12.col-sm-8
       .row.list-group
         each match in matches
           .col-xs-12.list-group-item
             h4 
-              a(href="/tossdetails/"+ match._id)= match.homeTeam
+              a(href="/tossdetails/"+ match._id) #{match.homeTeam} vs #{match.awayTeam}
 
               

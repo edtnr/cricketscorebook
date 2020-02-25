@@ -6,23 +6,27 @@ block content
     .row
         .col-lg-7.col-md-7
             h4 Batting Statistics
+            
             table.table
                 tr
                     th Player name
                     th Runs scored
                     th Balls faced
-                    th Fours
-                    th Sixes
                     th Economy Rate
-                each player in players
-                    tr 
-                        td #{player.name}
-                        td #{player.runsscored}
-                        td 0
-                        td 0
-                        td 0 
-                        td 0
                 
+                tr.table-active
+                    td #{players[0].name}
+                    td #{players[0].runsscored}
+                    td #{players[0].ballsfaced}
+                    td #{players[0].runsscored/(overs/10)}
+                tr
+                    td #{players[1].name}
+                    td #{players[1].runsscored}
+                    td #{players[1].ballsfaced}
+                    td #{players[1].runsscored/(overs/10)}
+            form(name="swapPlayers", method="POST", action="/matches/"+matchid+"/players/"+players[1]._id+"/"+players[0]._id+"/"+ bowlingPlayers[0]._id, novalidate) 
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='swap', value='YES')  Swap scoring batter 
+                    span.fas.fa-retweet
             br
             h4 Bowling Statistics
             table.table
@@ -35,29 +39,55 @@ block content
                     tr 
                         td #{player.name}
                         td #{player.ballsbowled}
-                        td 0
-                        td 0  
+                        td #{player.runsagainst}
+                        td #{player.wicketsgained}
+            form(name="changePlayers", method="POST", action="/startingdetails/"+matchid+"/"+homeTeam+"/"+awayTeam, novalidate) 
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='swap', value='YES')  Change players 
+                    span.fas.fa-exchange-alt
+           
         .col-lg-5.col-md-5
             .col.text-center
-                h1 #{homeTeam} 0
+                h1 #{homeTeam} vs #{awayTeam}
+                h1 #{matchScore} - #{matchWickets}
             br
             .col.text-center
-                h1 Overs played: 0.1
-
+                h1 Overs played: #{overs/10}
     br
     .card
         .row
-            form(name='myform', method='POST', action='/gametime', novalidate)
-                .col-lg-12.btn-group
-                    button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='.') .
-                    button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='1') 1
-                    button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='2') 2
-                    button.btn.btn-outline-dark.btn-lg(type='button', name='scoring', value='3') 3
-                    button.btn.btn-outline-dark.btn-lg(type='button', name='scoring', value='4') 4
-                    button.btn.btn-outline-dark.btn-lg(type='button', name='scoring', value='6') 6
-                    button.btn.btn-outline-dark.btn-lg(type='button', name='scoring', value='5+') 5+
-                    button.btn.btn-outline-warning.btn-lg(type='button', name='scoring', value='wide') Wide
-                    button.btn.btn-outline-warning.btn-lg(type='button', name='scoring', value='no ball') No Ball
-                    button.btn.btn-outline-warning.btn-lg(type='button', name='scoring', value='bye') Bye
-                    button.btn.btn-outline-warning.btn-lg(type='button', name='scoring',value='leg bye') Leg Bye
-                    button.btn.btn-outline-danger.btn-lg(type='button', name='scoring', value='out') Out
+            form.col-lg-12.col-xs-12.col.text-center(name='myform', method='POST', action='/matches/' + matchid + "/players/" + players[0]._id + "/" + players[1]._id +"/" + bowlingPlayers[0]._id + "/scores" , novalidate)
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='0') .
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='1') 1
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='2') 2
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='3') 3
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='4') 4
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='5') 5
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='6') 6
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='7') 7
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='8') 8
+                button.btn.btn-outline-dark.btn-lg(type='submit', name='scoring', value='9') 9
+                button.btn.btn-outline-warning.btn-lg(type='submit', name='scoring', value='1') Wide
+                button.btn.btn-outline-warning.btn-lg(type='submit', name='scoring', value='1') No Ball
+                button.btn.btn-outline-warning.btn-lg(type='submit', name='scoring', value='1') Bye
+                button.btn.btn-outline-warning.btn-lg(type='submit', name='scoring',value='1') Leg Bye
+            br
+            form.col-lg-12(name="outform", method="POST", action="/matches/" + matchid + "/players/out")
+                button.btn.btn-outline-danger.btn-lg.btn-block(type='submit', name='scoring', value='out') Out
+            form.col-lg-12(name="extras", method="GET", action="/match/extras/" + matchid )
+                button.btn.btn-outline-primary.btn-lg.btn-block(type='submit', value='extra') Extras
+            form.col-lg-12()
+                button.btn.btn-outline-warning.btn-lg.btn-block(type='submit', onclick="endMatch()", value='endmatch') End Match
+
+            script.
+                function endMatch() {
+                var txt;
+                if (confirm("Are you sure you want to end the match?")) {
+                    window.location.replace("http://localhost:3000/match/stats/#{matchid}");
+                }
+                }
+                var app = angular.module('myApp', []);
+                app.controller('myCtrl', function($scope) {
+        
+                 });
+
+           

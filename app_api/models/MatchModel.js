@@ -45,11 +45,19 @@ const PlayerSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  runsagainst : {
+    type: Number,
+    default: 0,
+  },
   out: {
     type: Boolean,
     default: false
   },
   playing: {
+    type: Boolean,
+    default: false
+  },
+  facing: {
     type: Boolean,
     default: false
   }
@@ -67,6 +75,14 @@ const MatchSchema = new mongoose.Schema(
     },
     players: [PlayerSchema],
     oversPlayed: {
+      type: Number,
+      default: 0
+    },
+    score: {
+      type: Number,
+      default: 0,
+    },
+    wickets: {
       type: Number,
       default: 0
     }

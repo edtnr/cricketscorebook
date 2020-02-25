@@ -4,35 +4,34 @@ block content
     .col.text-center
         h1= title
     br
-    form(name='myform', method='POST', action='/scoring', novalidate)
+    form(name='myform', method='POST', action='/matches/' + matchid, novalidate)
         #form-group
             h3 Facing batter:
-            select.form-control.input( name='startingbatter1' type='select')
+            select.form-control.input( name='startingbatter1', type='select', ng-model='startingbatter1')
                 each player in battingPlayers
-                    option= player.name
+                    option(value=player._id)= player.name
         br
         #form-group
             h3 Non facing batter:
-            select.form-control.input( name='startingbatter2' type='select')
+            select.form-control.input( name='startingbatter2', type='select', ng-model='startingbatter2')
                 each player in battingPlayers
-                    option= player.name
+                    option(value=player._id)= player.name
+        br
+        h6(ng-show="myform.startingbatter1.$dirty && myform.startingbatter2.$dirty  && startingbatter1 == startingbatter2") Starting batters can not be the same.
         br
         #form-group
             h3 Starting bowler:
             select.form-control.input( name='startingbowler' type='select')
                 each player in bowlingPlayers
-                    option= player.name
+                    option(value=player._id)= player.name
+        
         .col.text-center
-            input.btn.btn-primary( type='submit', value='Start Scoring') 
+            input.btn.btn-primary(ng-disabled="startingbatter1 == startingbatter2 || myform.startingbatter2.$pristine || myform.startingbatter1.$pristine" type='submit', value='Start Scoring') 
         br
-    nav(aria-label='breadcrumb')
-        ol.breadcrumb
-            li.breadcrumb-item
-                a(href='/teams') Teams Setup
-            li.breadcrumb-item
-                a(href='/players') Players Setup
-            li.breadcrumb-item 
-                a(href='/tossdetails') Toss Details
-            li.breadcrumb-item.active(aria-current='page')  Starting Details
-            li.breadcrumb-item Scoring
+       
     
+    script.
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+       
+        });

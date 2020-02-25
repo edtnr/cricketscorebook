@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    .col.text-center
+        h1= title
+    br
+    form(name='myform', method='POST', action='/matches/' + matchid + "/out", novalidate)
+        #form-group
+            h3 Batter #{outOrRetired}:
+            select.form-control.input( name='outbatter' type='select' ng-model='outbatter')
+                each player in playingPlayers
+                    option(value=player._id)= player.name
+        br
+        #form-group
+            h3 replacing batter:
+            select.form-control.input( name='newbatter' type='select' ng-model='newbatter')
+                each player in battingPlayers
+                    option(value=player._id)= player.name
+        br
+        h6(ng-show="myform.outbatter.$dirty && myform.newbatter.$dirty  && outbatter == newbatter") Batters can not be the same.
+        br
+        .col.text-center
+            input.btn.btn-primary(ng-disabled="outbatter == newbatter || myform.outbatter.$pristine || myform.newbatter.$pristine" type='submit', value='Submit') 
+        br
+    
+    script.
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+       
+        });

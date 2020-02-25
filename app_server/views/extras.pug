@@ -1,0 +1,23 @@
+extends layout 
+
+block content
+    br
+    h1.col.text-center= title
+    br
+    form(name='myform', method='POST', action='/match/split/' +matchid, novalidate)
+        .row
+            .col.text-center
+                #form-group
+                    input.btn.btn-primary.btn-lg(type='submit', value='Split Innings') 
+    br
+    form(name='myform', method='POST', action='/retire/' +matchid, novalidate)
+        .row
+            .col.text-center
+                #form-group
+                    input.btn.btn-primary.btn-lg(type='submit', value='Retire player') 
+    br
+    form(name='myform', method='GET', action='/match/' + matchid, novalidate)
+        .row
+            .col.text-center
+                #form-group
+                    input.btn.btn-primary.btn-lg(type='submit', value='Back to game?') 

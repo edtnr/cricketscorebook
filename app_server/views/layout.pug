@@ -13,7 +13,8 @@ html
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-validation/1.4.4/angular-validation.js')
-    
+    script(src='https://kit.fontawesome.com/266008f227.js', crossorigin='anonymous')
+
     nav.navbar.navbar-expand-md.navbar-dark.bg-dark
         a.navbar-brand(href='/') Home
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
@@ -21,7 +22,11 @@ html
         #navbarsExampleDefault.collapse.navbar-collapse
             ul.navbar-nav.mr-auto
                 li.nav-item
-                    a.nav-link(href='/') Blank link
+                    a.nav-link(href='/teams') Start new match
+                li.nav-item
+                    a.nav-link(href='/load') Load match
+                li.nav-item
+                    a.nav-link(href='/statistics') Statistics
     .container
       block content
       br

@@ -2,7 +2,6 @@ const express = require("express");
 var app = express();
 const router = express.Router();
 const ctrlMatches = require("../controllers/matches");
-const ctrlPlayers = require("../controllers/players");
 
 //for matchs
 router.get("/loadmatches", ctrlMatches.matchesByTime);
@@ -12,8 +11,8 @@ router.get("/matches/:matchid", ctrlMatches.matchesReadOne);
 
 //define player link
 router.get("/matches/:matchid/players/:playerid", ctrlMatches.playersReadOne);
-router.put("/matches/:matchid/players/:playerid", ctrlMatches.playersUpdatePlaying);
+router.put("/matches/:matchid/players/:facingbatterid/:batterid/:bowlerid", ctrlMatches.playersUpdatePlaying);
 router.put("/matches/:matchid/:teamname", ctrlMatches.playersUpdateBatting);
-
-
+router.put("/matches/:matchid/players/:facingbatterid/:batterid/:bowlerid/scores/:score", ctrlMatches.updateScore);
+router.put("/matches/:matchid/players/:outbatterid/:newbatterid", ctrlMatches.playerUpdateOut);
 module.exports = router;
