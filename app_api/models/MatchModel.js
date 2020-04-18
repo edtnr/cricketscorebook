@@ -23,6 +23,7 @@ const PlayerSchema = new mongoose.Schema({
   },
   runsscored: {
     type: Number,
+    min: 0,
     default: 0
   },
   team: {
@@ -35,18 +36,22 @@ const PlayerSchema = new mongoose.Schema({
   },
   ballsfaced: {
     type: Number,
+    min: 0,
     default: 0
   },
   wicketsgained: {
     type: Number,
+    min: 0,
     default: 0
   },
   ballsbowled: {
     type: Number,
+    min: 0,
     default: 0
   },
   runsagainst : {
     type: Number,
+    min: 0,
     default: 0,
   },
   out: {
@@ -76,14 +81,17 @@ const MatchSchema = new mongoose.Schema(
     players: [PlayerSchema],
     oversPlayed: {
       type: Number,
+      min: 0,
       default: 0
     },
     score: {
       type: Number,
+      min: 0,
       default: 0,
     },
     wickets: {
       type: Number,
+      min: 0,
       default: 0
     }
   },

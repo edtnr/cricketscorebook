@@ -10,9 +10,10 @@ router.get("/matches/:matchid", ctrlMatches.matchesReadOne);
 //router.put("/matches/:matchid", ctrlMatches.matchesUpdateOne);
 
 //define player link
-router.get("/matches/:matchid/players/:playerid", ctrlMatches.playersReadOne);
+router.get("/matches/:matchid/players", ctrlMatches.getPlayers);
 router.put("/matches/:matchid/players/:facingbatterid/:batterid/:bowlerid", ctrlMatches.playersUpdatePlaying);
 router.put("/matches/:matchid/:teamname", ctrlMatches.playersUpdateBatting);
 router.put("/matches/:matchid/players/:facingbatterid/:batterid/:bowlerid/scores/:score", ctrlMatches.updateScore);
 router.put("/matches/:matchid/players/:outbatterid/:newbatterid", ctrlMatches.playerUpdateOut);
+
 module.exports = router;
