@@ -214,6 +214,7 @@ var renderTossDetailsPage = function(req, res, matchdata) {
     }
   }
   res.render("tossdetails", {
+    title: 'Details of the coin toss',
     homePlayers: homePlayers,
     awayPlayers: awayPlayers,
     homeTeam: matchdata.homeTeam,

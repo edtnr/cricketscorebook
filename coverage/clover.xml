@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1587135165740" clover="3.2.0">
-  <project timestamp="1587135165741" name="All files">
+<coverage generated="1587210765482" clover="3.2.0">
+  <project timestamp="1587210765483" name="All files">
     <metrics statements="191" coveredstatements="189" conditionals="54" coveredconditionals="47" methods="40" coveredmethods="39" elements="285" coveredelements="275" complexity="0" loc="191" ncloc="191" packages="5" files="5" classes="5"/>
     <package name="cricketscorebook">
       <metrics statements="25" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -186,11 +186,11 @@
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="MatchModel.js" path="/Users/Edturner/Desktop/cricketscorebook/app_api/models/MatchModel.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="71" count="2" type="stmt"/>
-        <line num="101" count="2" type="stmt"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
       </file>
     </package>
     <package name="cricketscorebook.app_api.routes">

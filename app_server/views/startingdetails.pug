@@ -4,6 +4,7 @@ block content
     .col.text-center
         h1= title
     br
+    br
     form(name='myform', method='POST', action='/matches/' + matchid, novalidate)
         #form-group
             h3 Facing batter:
@@ -19,14 +20,16 @@ block content
         br
         h6(ng-show="myform.startingbatter1.$dirty && myform.startingbatter2.$dirty  && startingbatter1 == startingbatter2") Starting batters can not be the same.
         br
+        br
         #form-group
-            h3 Starting bowler:
+            h3 Playing bowler:
             select.form-control.input( name='startingbowler' type='select')
                 each player in bowlingPlayers
                     option(value=player._id)= player.name
         
         .col.text-center
             input.btn.btn-primary(ng-disabled="startingbatter1 == startingbatter2 || myform.startingbatter2.$pristine || myform.startingbatter1.$pristine" type='submit', value='Start Scoring') 
+        
         br
        
     

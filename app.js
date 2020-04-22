@@ -23,8 +23,8 @@ app.use(bodyParser.json());
 const routesAPI = require('./app_api/routes/matches');
 app.use('/api', routesAPI);
 
-//var routes = require('./app_server/routes/index');
-//app.use('/', routes);
+var routes = require('./app_server/routes/index');
+app.use('/', routes);
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));

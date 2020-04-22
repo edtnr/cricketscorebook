@@ -112,8 +112,7 @@ module.exports.createMatch = function (req, res) {
                     sendJsonResponse(res, 400, err);
                 }
             }
-        )
-       
+        );
 };
 
 module.exports.matchesReadOne = function (req, res) {

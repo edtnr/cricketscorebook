@@ -7,7 +7,6 @@ const ctrlMatches = require("../controllers/matches");
 router.get("/loadmatches", ctrlMatches.matchesByTime);
 router.post("/matches", ctrlMatches.createMatch);
 router.get("/matches/:matchid", ctrlMatches.matchesReadOne);
-//router.put("/matches/:matchid", ctrlMatches.matchesUpdateOne);
 
 //define player link
 router.get("/matches/:matchid/players", ctrlMatches.getPlayers);

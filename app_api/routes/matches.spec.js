@@ -12,7 +12,6 @@ describe('Match API tests', () => {
     const date = new Date();
 
     beforeAll(async () => {
-        jest.setTimeout(10000);
         MockDate.set(date);
         const url = 'mongodb://localhost:27017/cricketscorebook';
         await mongoose.connect(url, { useNewUrlParser: true });
