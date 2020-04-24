@@ -207,47 +207,70 @@ module.exports.playersUpdatePlaying = function (req, res) {
 };
 
 module.exports.updateScore = function (req, res) {
-    match
-        .findById(req.params.matchid)
-        .select('players')
-        .exec(function (err, Match) {
-            var thisBatter, thisBowler, thisFacingBatter;
-            if (!Match) {
-                sendJsonResponse(res, 404, {
-                    message: 'Match not found',
-                });
-                return;
-            }
-            if (Match.players && Match.players.length > 0) {
-                thisFacingBatter = Match.players.id(req.params.facingbatterid);
-                thisBatter = Match.players.id(req.params.batterid);
-                thisBowler = Match.players.id(req.params.bowlerid);
-
-                thisFacingBatter.runsscored =
-                    thisFacingBatter.runsscored + parseInt(req.params.score);
-                thisBowler.ballsbowled += 1;
-                thisFacingBatter.ballsfaced += 1;
-                thisBowler.runsagainst += parseInt(req.params.score);
-                if (
-                    parseInt(req.params.score) != 0 &&
-                    parseInt(req.params.score) % 2 != 0
-                ) {
-                    thisFacingBatter.facing = false;
-                    thisBatter.facing = true;
-                }
+    if (
+        req.params.score == 'wide' ||
+        req.params.score == 'noBall' ||
+        req.params.score == 'bye' ||
+        req.params.score == 'legBye'
+    ) {
+        match
+            .findById(req.params.matchid)
+            .select('score')
+            .exec(function (err, Match) {
+                Match.score += 1;
                 Match.save(function (err, Match) {
-                    updateOvers(Match._id);
-                    updateScore(Match._id, parseInt(req.params.score));
+                    console.log('MATCH: ' + Match);
                     sendJsonResponse(res, 200, Match);
                 });
-            } else {
-                sendJsonResponse(res, 404, {
-                    message: 'Players not found',
-                });
-            }
-        });
-};
+            });
+    } else {
+        match
+            .findById(req.params.matchid)
+            .select('players')
+            .exec(function (err, Match) {
+                var thisBatter, thisBowler, thisFacingBatter;
+                if (!Match) {
+                    sendJsonResponse(res, 404, {
+                        message: 'Match not found',
+                    });
+                    return;
+                }
+                if (Match.players && Match.players.length > 0) {
+                    thisFacingBatter = Match.players.id(
+                        req.params.facingbatterid
+                    );
+                    thisBatter = Match.players.id(req.params.batterid);
+                    thisBowler = Match.players.id(req.params.bowlerid);
 
+                    thisFacingBatter.runsscored =
+                        thisFacingBatter.runsscored +
+                        parseInt(req.params.score);
+                    thisBowler.ballsbowled += 1;
+                    thisFacingBatter.ballsfaced += 1;
+                    thisBowler.runsagainst += parseInt(req.params.score);
+                    if (
+                        parseInt(req.params.score) != 0 &&
+                        parseInt(req.params.score) % 2 != 0
+                    ) {
+                        thisFacingBatter.facing = false;
+                        thisBatter.facing = true;
+                    }
+                    Match.save(function (err, Match) {
+                        updateScore(
+                            req.params.matchid,
+                            parseInt(req.params.score)
+                        );
+                        updateOvers(req.params.matchid);
+                        sendJsonResponse(res, 200, Match);
+                    });
+                } else {
+                    sendJsonResponse(res, 404, {
+                        message: 'Players not found',
+                    });
+                }
+            });
+    }
+};
 var updateOvers = function (matchid) {
     match
         .findById(matchid)
@@ -273,7 +296,16 @@ var doSetOvers = function (match) {
 };
 
 var updateScore = function (matchid, runsScored) {
-    console.log('Update score for: ' + matchid + ' By ' + runsScored);
+    console.log(runsScored.toString());
+    if (
+        runsScored != 'wide' ||
+        runsScored != 'noBall' ||
+        runsScored != 'bye' ||
+        runsScored != 'legBye'
+    ) {
+        updateOvers(matchid);
+    }
+
     match
         .findById(matchid)
         .select('score')
@@ -286,7 +318,17 @@ var updateScore = function (matchid, runsScored) {
 
 var doSetScore = function (match, runsScored) {
     var overs;
-    match.score += runsScored;
+    if (
+        runsScored != 'wide' ||
+        runsScored != 'noBall' ||
+        runsScored != 'bye' ||
+        runsScored != 'legBye'
+    ) {
+        match.score += runsScored;
+    } else {
+        match.score += 1;
+    }
+
     match.save(function (err) {
         console.log('score updated to ' + match.score);
     });
